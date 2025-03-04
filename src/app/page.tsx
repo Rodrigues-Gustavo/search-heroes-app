@@ -54,67 +54,70 @@ export default function Home() {
   }, []);
 
   return (
+    <div>
     <div id="container">
-    <header className={styles.header}>
-      <Image
-        src="/assets/logo/Group@3x.png"
-        alt="Logo do Grupo"
-        width={340}
-        height={120}
-        style={{ objectFit: "contain" }}
-      />
-      <h1>EXPLORE O UNIVERSO</h1>
-      <h5>Mergulhe no domínio deslumbrante de todos os personagens clássicos que você ama - e aqueles que você descobrirá em breve!</h5>
-      <div id="searchInputContainer">
-          <Image
-            src="/assets/busca/Lupa/Shape@1,5x.svg"
-            alt="Logo do Grupo"
-            layout="intrinsic"
-            width={20}
-            height={0}
-          />
-        <input id="searchInput" type="text" placeholder="Procure por heróis"/>
-      </div>
-    </header>
-    <main>
-      <section className={styles.mainHeader}>
-        <h3>
-          Encontrados 10000 heróis
-        </h3>
-        <div className={styles.mainToggle}>
-          <div className={styles.mainToggleText}>
+      <header className={styles.header}>
+        <Image
+          src="/assets/logo/Group@3x.png"
+          alt="Logo do Grupo"
+          width={340}
+          height={120}
+          style={{ objectFit: "contain" }}
+        />
+        <h1>EXPLORE O UNIVERSO</h1>
+        <h5>Mergulhe no domínio deslumbrante de todos os personagens clássicos que você ama - e aqueles que você descobrirá em breve!</h5>
+        <div className={styles.searchInputContainer}>
             <Image
-              src="/assets/icones/heroi/noun_Superhero_2227044@1,5x.svg"
-              alt="Logo do Grupo"
-              width={15}
-              height={25}
-            />
-            Ordenar por nome - A/Z
-          </div>
-          <ToggleButton/>
-          <div className={styles.mainToggleText}>
-            <Image
-              src="/assets/icones/heart/Path.svg"
+              src="/assets/busca/Lupa/Shape@1,5x.svg"
               alt="Logo do Grupo"
               layout="intrinsic"
-              width={15}
-              height={25}
+              width={20}
+              height={20}
             />
-            Somente favoritos
-          </div>
+          <input className={styles.searchInput} type="text" placeholder="Procure por heróis"/>
         </div>
-      </section>
-      <section className={styles.gridCards}>
-        {herois.map((heroi) => (
-              <Card
-                key={heroi.id}
-                heroId={heroi.id}
-                heroName={heroi.name}
-                heroImage={heroi.thumbnail.path + "." + heroi.thumbnail.extension}
+      </header>
+      <main>
+        <section className={styles.mainHeader}>
+          <h3>
+            Encontrados 10000 heróis
+          </h3>
+          <div className={styles.mainToggle}>
+            <div className={styles.mainToggleText}>
+              <Image
+                src="/assets/icones/heroi/noun_Superhero_2227044@1,5x.svg"
+                alt="Logo do Grupo"
+                width={15}
+                height={25}
               />
-            ))}
-      </section>
-    </main>
-  </div>
+              Ordenar por nome - A/Z
+            </div>
+            <ToggleButton/>
+            <div className={styles.mainToggleText}>
+              <Image
+                src="/assets/icones/heart/Path.svg"
+                alt="Logo do Grupo"
+                layout="intrinsic"
+                width={15}
+                height={25}
+              />
+              Somente favoritos
+            </div>
+          </div>
+        </section>
+        <section className={styles.gridCards}>
+          {herois.map((heroi) => (
+                <Card
+                  key={heroi.id}
+                  heroId={heroi.id}
+                  heroName={heroi.name}
+                  heroImage={heroi.thumbnail.path + "." + heroi.thumbnail.extension}
+                />
+              ))}
+        </section>
+      </main>
+    </div>
+    <footer id="footer"></footer>
+    </div>
   );
 }
