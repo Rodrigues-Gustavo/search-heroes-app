@@ -54,3 +54,28 @@ export async function buscarHeroi(id:string) {
         return [];
     }
 }
+
+export async function buscarQuadrinhosHeroi(id:string) {
+    
+    const ts = new Date().getTime().toString();
+
+    const hash = createHash("md5")
+    .update(ts + PRIVATE_KEY + PUBLIC_KEY)
+    .digest("hex");
+
+    try {
+        const response = await axios.get(`${BASE_URL}characters/${id}/comics`, {
+            params: {
+            apikey: PUBLIC_KEY,
+            ts,
+            hash,
+            limit: 10,
+            orderBy: "-onsaleDate"
+        },
+        });
+        return response.data.data.results;
+    } catch (erro) {
+        console.error("Erro ao buscar heróis:", erro);
+        return [];
+    }
+}
