@@ -50,7 +50,7 @@ export default function Home() {
         height={0}
       />
       <h1>EXPLORE O UNIVERSO</h1>
-      <h5>Mergulhe no domínio deslumbrante de todos os personagens clássicos que você ama - e aqueles que você descobrirá em breve</h5>
+      <h5>Mergulhe no domínio deslumbrante de todos os personagens clássicos que você ama - e aqueles que você descobrirá em breve!</h5>
       <div id="searchInputContainer">
           <Image
             src="/assets/busca/Lupa/Shape@1,5x.svg"
