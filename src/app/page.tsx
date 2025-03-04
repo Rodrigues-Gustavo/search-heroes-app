@@ -5,6 +5,7 @@ import Image from "next/image";
 import styles from "./page.module.css";
 import Card from "@/components/Card";
 import { buscarHeroisHome } from "@/services/marvelApi";
+import { insertFavorito } from "@/utils/favorite";
 
 const ToggleButton = () => {
   const [isToggled, setIsToggled] = useState(false);
@@ -50,12 +51,24 @@ export default function Home() {
     return [];
   });
 
+  const [mostrarFavoritos, setMostrarFavoritos] = useState(false);
+  const [heroisFiltrados, setHeroisFiltrados] = useState<any[]>([]);
+  const search = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const searchValue = event.target.value.toLowerCase();
 
+    setHeroisFiltrados(() =>
+      (mostrarFavoritos
+        ? herois.filter((heroi) => favoritos.includes(heroi.id))
+        : herois
+      ).filter((heroi) => heroi.name.toLowerCase().includes(searchValue))
+    );
+  };
 
   useEffect(() => {
     async function obterHerois() {
       const dados = await buscarHeroisHome();
       setHerois(dados);
+      setHeroisFiltrados(dados);
     }
     obterHerois();
   }, []);
@@ -72,21 +85,6 @@ export default function Home() {
         setFavoritos(JSON.parse(savedFavoritos));
     }
   }, []);
-
-  const insertFavorito = (id: number) => {
-    setFavoritos((prevFavoritos) => 
-      {
-        if (prevFavoritos.includes(id)) {
-          return prevFavoritos.filter((favId) => favId !== id);
-        }
-        if (prevFavoritos.length >= 5) {
-          alert("Você só pode favoritar até 5 heróis!");
-          return prevFavoritos;
-        }
-            return [...prevFavoritos, id];
-      } 
-    );
-};
 
   return (
     <div>
@@ -109,13 +107,13 @@ export default function Home() {
               width={20}
               height={20}
             />
-          <input className={styles.searchInput} type="text" placeholder="Procure por heróis"/>
+          <input className={styles.searchInput} type="text" placeholder="Procure por heróis" onChange={search}/>
         </div>
       </header>
       <main>
         <section className={styles.mainHeader}>
           <h3>
-            Encontrados 10000 heróis
+            Encontrados {heroisFiltrados.length} heróis
           </h3>
           <div className={styles.mainToggle}>
             <div className={styles.mainToggleText}>
@@ -128,11 +126,19 @@ export default function Home() {
               Ordenar por nome - A/Z
             </div>
             <ToggleButton/>
-            <div className={styles.mainToggleText}>
+              <div className={`${styles.mainFavoriteText} ${
+                  mostrarFavoritos ? styles.mainFavoriteTextActive : ""}`}
+              onClick={() => {
+                setMostrarFavoritos((bol) => !bol);
+                setHeroisFiltrados(() =>
+                  mostrarFavoritos
+                    ? herois
+                    : herois.filter((heroi) => favoritos.includes(heroi.id))
+                );
+              }}>
               <Image
                 src="/assets/icones/heart/Path.svg"
-                alt="Logo do Grupo"
-                layout="intrinsic"
+                alt="heart"
                 width={15}
                 height={25}
               />
@@ -141,14 +147,14 @@ export default function Home() {
           </div>
         </section>
         <section className={styles.gridCards}>
-          {herois.map((heroi) => (
+          {heroisFiltrados.map((heroi) => (
                 <Card
                   key={heroi.id}
                   heroId={heroi.id}
                   heroName={heroi.name}
                   heroImage={heroi.thumbnail.path + "." + heroi.thumbnail.extension}
                   isFavorited={favoritos.includes(heroi.id)}
-                  onSelect={() => insertFavorito(heroi.id)}
+                  onSelect={() => insertFavorito(heroi.id, setFavoritos)}
                 />
               ))}
         </section>
