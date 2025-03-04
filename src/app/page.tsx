@@ -7,40 +7,6 @@ import Card from "@/components/Card";
 import { buscarHeroisHome } from "@/services/marvelApi";
 import { insertFavorito } from "@/utils/favorite";
 
-const ToggleButton = () => {
-  const [isToggled, setIsToggled] = useState(false);
-  
-  const handleToggle = () => {
-      setIsToggled(!isToggled);
-  };
-  
-  return (
-      <button
-      onClick={handleToggle}
-      className={styles.toggleButton}
-      aria-label="Toggle Button"
-      >
-      {isToggled ? (
-          <Image
-          src="/assets/toggle/Group 6.png"
-          alt="Logo do Grupo"
-          layout="intrinsic"
-          width={60}
-          height={0}
-      />
-      ) : (
-          <Image
-          src="/assets/toggle/Group 2@2x.png"
-          alt="Logo do Grupo"
-          layout="intrinsic"
-          width={60}
-          height={0}
-      />
-      )}
-      </button>
-  );
-  }
-
 export default function Home() {
   const [herois, setHerois] = useState<any[]>([]);
   const [favoritos, setFavoritos] = useState<number[]>(() => {
@@ -63,6 +29,31 @@ export default function Home() {
       ).filter((heroi) => heroi.name.toLowerCase().includes(searchValue))
     );
   };
+
+  const [isToggled, setIsToggled] = useState(false);
+const handleToggle = () => {
+  setIsToggled((prev) => {
+    const newToggleState = !prev;
+          setHeroisFiltrados(() => {
+      if (mostrarFavoritos) {
+        if (newToggleState) {
+          const heroisOrdenados = [...herois].sort((a, b) => a.name.localeCompare(b.name));
+          return heroisOrdenados.filter((heroi) => favoritos.includes(heroi.id));
+        } else {
+          return herois.filter((heroi) => favoritos.includes(heroi.id));
+        }
+      } else {
+        if (newToggleState) {
+          return [...herois].sort((a, b) => a.name.localeCompare(b.name));
+        } else {
+          return herois;
+        }
+      }
+    });
+
+    return newToggleState;
+  });
+};
 
   useEffect(() => {
     async function obterHerois() {
@@ -125,16 +116,43 @@ export default function Home() {
               />
               Ordenar por nome - A/Z
             </div>
-            <ToggleButton/>
+              <button
+                onClick={handleToggle}
+                className={styles.toggleButton}
+                aria-label="Toggle Button"
+                >
+                {isToggled ? (
+                    <Image
+                    src="/assets/toggle/Group2.svg"
+                    alt="Logo do Grupo"
+                    layout="intrinsic"
+                    width={60}
+                    height={0}
+                />
+                ) : (
+                    <Image
+                    src="/assets/toggle/Group6.svg"
+                    alt="Logo do Grupo"
+                    layout="intrinsic"
+                    width={60}
+                    height={0}
+                />
+                )}
+              </button>
               <div className={`${styles.mainFavoriteText} ${
                   mostrarFavoritos ? styles.mainFavoriteTextActive : ""}`}
               onClick={() => {
-                setMostrarFavoritos((bol) => !bol);
-                setHeroisFiltrados(() =>
-                  mostrarFavoritos
-                    ? herois
-                    : herois.filter((heroi) => favoritos.includes(heroi.id))
-                );
+                setMostrarFavoritos((prev) => {
+                  const newMostrarFavoritos = !prev;
+                  let updatedHerois = newMostrarFavoritos
+                    ? herois.filter((heroi) => favoritos.includes(heroi.id))
+                    : [...herois];
+                  if (isToggled) {
+                    updatedHerois = updatedHerois.sort((a, b) => a.name.localeCompare(b.name));
+                  }
+                  setHeroisFiltrados(updatedHerois);
+                  return newMostrarFavoritos;
+                });
               }}>
               <Image
                 src="/assets/icones/heart/Path.svg"
