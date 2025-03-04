@@ -42,7 +42,14 @@ const ToggleButton = () => {
 
 export default function Home() {
   const [herois, setHerois] = useState<any[]>([]);
-  const [favoritos, setFavoritos] = useState<any[]>([]);
+  const [favoritos, setFavoritos] = useState<number[]>(() => {
+    if (typeof window !== "undefined") {
+      const savedFavoritos = localStorage.getItem("favoritos");
+      return savedFavoritos ? JSON.parse(savedFavoritos) : [];
+    }
+    return [];
+  });
+
 
 
   useEffect(() => {
@@ -52,6 +59,34 @@ export default function Home() {
     }
     obterHerois();
   }, []);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem("favoritos", JSON.stringify(favoritos));
+    }
+  }, [favoritos]);
+
+  useEffect(() => {
+    const savedFavoritos = localStorage.getItem("favoritos");
+    if (savedFavoritos) {
+        setFavoritos(JSON.parse(savedFavoritos));
+    }
+  }, []);
+
+  const insertFavorito = (id: number) => {
+    setFavoritos((prevFavoritos) => 
+      {
+        if (prevFavoritos.includes(id)) {
+          return prevFavoritos.filter((favId) => favId !== id);
+        }
+        if (prevFavoritos.length >= 5) {
+          alert("Você só pode favoritar até 5 heróis!");
+          return prevFavoritos;
+        }
+            return [...prevFavoritos, id];
+      } 
+    );
+};
 
   return (
     <div>
@@ -112,6 +147,8 @@ export default function Home() {
                   heroId={heroi.id}
                   heroName={heroi.name}
                   heroImage={heroi.thumbnail.path + "." + heroi.thumbnail.extension}
+                  isFavorited={favoritos.includes(heroi.id)}
+                  onSelect={() => insertFavorito(heroi.id)}
                 />
               ))}
         </section>
