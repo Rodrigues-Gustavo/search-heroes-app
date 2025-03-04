@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Work_Sans } from 'next/font/google';
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Search Heroes",
