@@ -108,6 +108,7 @@ export default function Home() {
         {herois.map((heroi) => (
               <Card
                 key={heroi.id}
+                heroId={heroi.id}
                 heroName={heroi.name}
                 heroImage={heroi.thumbnail.path + "." + heroi.thumbnail.extension}
               />
