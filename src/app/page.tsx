@@ -16,12 +16,11 @@ export default function Home() {
     }
     return [];
   });
-
   const [mostrarFavoritos, setMostrarFavoritos] = useState(false);
   const [heroisFiltrados, setHeroisFiltrados] = useState<any[]>([]);
   const search = (event: React.ChangeEvent<HTMLInputElement>) => {
     const searchValue = event.target.value.toLowerCase();
-
+  
     setHeroisFiltrados(() =>
       (mostrarFavoritos
         ? herois.filter((heroi) => favoritos.includes(heroi.id))
@@ -31,30 +30,29 @@ export default function Home() {
   };
 
   const [isToggled, setIsToggled] = useState(false);
-const handleToggle = () => {
-  setIsToggled((prev) => {
-    const newToggleState = !prev;
-          setHeroisFiltrados(() => {
-      if (mostrarFavoritos) {
-        if (newToggleState) {
-          const heroisOrdenados = [...herois].sort((a, b) => a.name.localeCompare(b.name));
-          return heroisOrdenados.filter((heroi) => favoritos.includes(heroi.id));
+  const handleToggle = () => {
+    setIsToggled((prev) => {
+      const newToggleState = !prev;
+            setHeroisFiltrados(() => {
+        if (mostrarFavoritos) {
+          if (newToggleState) {
+            const heroisOrdenados = [...herois].sort((a, b) => a.name.localeCompare(b.name));
+            return heroisOrdenados.filter((heroi) => favoritos.includes(heroi.id));
+          } else {
+            return herois.filter((heroi) => favoritos.includes(heroi.id));
+          }
         } else {
-          return herois.filter((heroi) => favoritos.includes(heroi.id));
+          if (newToggleState) {
+            return [...herois].sort((a, b) => a.name.localeCompare(b.name));
+          } else {
+            return herois;
+          }
         }
-      } else {
-        if (newToggleState) {
-          return [...herois].sort((a, b) => a.name.localeCompare(b.name));
-        } else {
-          return herois;
-        }
-      }
+      });
+  
+      return newToggleState;
     });
-
-    return newToggleState;
-  });
-};
-
+  };
   useEffect(() => {
     async function obterHerois() {
       const dados = await buscarHeroisHome();
@@ -63,13 +61,11 @@ const handleToggle = () => {
     }
     obterHerois();
   }, []);
-
   useEffect(() => {
     if (typeof window !== "undefined") {
       localStorage.setItem("favoritos", JSON.stringify(favoritos));
     }
   }, [favoritos]);
-
   useEffect(() => {
     const savedFavoritos = localStorage.getItem("favoritos");
     if (savedFavoritos) {
@@ -92,13 +88,12 @@ const handleToggle = () => {
         <h5>Mergulhe no domínio deslumbrante de todos os personagens clássicos que você ama - e aqueles que você descobrirá em breve!</h5>
         <div className={styles.searchInputContainer}>
             <Image
-              src="/assets/busca/Lupa/Shape@1,5x.svg"
-              alt="Logo do Grupo"
-              layout="intrinsic"
-              width={20}
-              height={20}
+                src="/assets/busca/Lupa/Shape@1,5x.svg"
+                alt="Logo do Grupo"
+                width={20}
+                height={20}
             />
-          <input className={styles.searchInput} type="text" placeholder="Procure por heróis" onChange={search}/>
+            <input className={styles.searchInput} type="text" placeholder="Procure por heróis" onChange={search}/>
         </div>
       </header>
       <main>
@@ -116,44 +111,44 @@ const handleToggle = () => {
               />
               Ordenar por nome - A/Z
             </div>
-              <button
-                onClick={handleToggle}
-                className={styles.toggleButton}
-                aria-label="Toggle Button"
-                >
-                {isToggled ? (
-                    <Image
-                    src="/assets/toggle/Group2.svg"
-                    alt="Logo do Grupo"
-                    layout="intrinsic"
-                    width={60}
-                    height={0}
-                />
-                ) : (
-                    <Image
-                    src="/assets/toggle/Group6.svg"
-                    alt="Logo do Grupo"
-                    layout="intrinsic"
-                    width={60}
-                    height={0}
-                />
-                )}
-              </button>
-              <div className={`${styles.mainFavoriteText} ${
-                  mostrarFavoritos ? styles.mainFavoriteTextActive : ""}`}
-              onClick={() => {
-                setMostrarFavoritos((prev) => {
-                  const newMostrarFavoritos = !prev;
-                  let updatedHerois = newMostrarFavoritos
-                    ? herois.filter((heroi) => favoritos.includes(heroi.id))
-                    : [...herois];
-                  if (isToggled) {
-                    updatedHerois = updatedHerois.sort((a, b) => a.name.localeCompare(b.name));
-                  }
-                  setHeroisFiltrados(updatedHerois);
-                  return newMostrarFavoritos;
-                });
-              }}>
+            <button
+              onClick={handleToggle}
+              className={styles.toggleButton}
+              aria-label="Toggle Button"
+              >
+              {isToggled ? (
+                  <Image
+                  src="/assets/toggle/Group 2@2x.png"
+                  alt="Logo do Grupo"
+                  layout="intrinsic"
+                  width={60}
+                  height={0}
+              />
+              ) : (
+                  <Image
+                  src="/assets/toggle/Group 6.png"
+                  alt="Logo do Grupo"
+                  layout="intrinsic"
+                  width={60}
+                  height={0}
+              />
+              )}
+            </button>
+            <div className={`${styles.mainFavoriteText} ${
+                mostrarFavoritos ? styles.mainFavoriteTextActive : ""}`}
+            onClick={() => {
+              setMostrarFavoritos((prev) => {
+                const newMostrarFavoritos = !prev;
+                let updatedHerois = newMostrarFavoritos
+                  ? herois.filter((heroi) => favoritos.includes(heroi.id))
+                  : [...herois];
+                if (isToggled) {
+                  updatedHerois = updatedHerois.sort((a, b) => a.name.localeCompare(b.name));
+                }
+                setHeroisFiltrados(updatedHerois);
+                return newMostrarFavoritos;
+              });
+            }}>
               <Image
                 src="/assets/icones/heart/Path.svg"
                 alt="heart"
@@ -165,16 +160,16 @@ const handleToggle = () => {
           </div>
         </section>
         <section className={styles.gridCards}>
-          {heroisFiltrados.map((heroi) => (
-                <Card
-                  key={heroi.id}
-                  heroId={heroi.id}
-                  heroName={heroi.name}
-                  heroImage={heroi.thumbnail.path + "." + heroi.thumbnail.extension}
-                  isFavorited={favoritos.includes(heroi.id)}
-                  onSelect={() => insertFavorito(heroi.id, setFavoritos)}
-                />
-              ))}
+        {heroisFiltrados.map((heroi) => (
+            <Card
+              key={heroi.id}
+              heroId={heroi.id}
+              heroName={heroi.name}
+              heroImage={heroi.thumbnail.path + "." + heroi.thumbnail.extension}
+              isFavorited={favoritos.includes(heroi.id)}
+              onSelect={() => insertFavorito(heroi.id, setFavoritos)}
+            />
+          ))}
         </section>
       </main>
     </div>

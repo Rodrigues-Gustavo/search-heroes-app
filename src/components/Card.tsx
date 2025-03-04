@@ -25,7 +25,7 @@ export default function Card(props:any){
                 <Image
                     src={
                         props.isFavorited
-                            ? "/assets/icones/heart/Path.svg"
+                            ? "/assets/icones/heart/Path.png"
                             : isHovered
                             ? "/assets/icones/heart/Path Copy 7.svg"
                             : "/assets/icones/heart/Path Copy 2@1,5x.svg"
