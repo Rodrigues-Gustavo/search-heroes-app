@@ -77,6 +77,7 @@ export default function Home() {
     <div>
     <div id="container">
       <header className={styles.header}>
+        <div className={styles.logoContainer}>
         <Image
           src="/assets/logo/Group@3x.png"
           alt="Logo do Grupo"
@@ -84,6 +85,7 @@ export default function Home() {
           height={120}
           style={{ objectFit: "contain" }}
         />
+        </div>
         <h1>EXPLORE O UNIVERSO</h1>
         <h5>Mergulhe no domínio deslumbrante de todos os personagens clássicos que você ama - e aqueles que você descobrirá em breve!</h5>
         <div className={styles.searchInputContainer}>
