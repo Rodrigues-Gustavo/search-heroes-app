@@ -14,6 +14,16 @@ export default function Home() {
       />
       <h1>EXPLORE O UNIVERSO</h1>
       <h5>Mergulhe no domínio deslumbrante de todos os personagens clássicos que você ama - e aqueles que você descobrirá em breve!</h5>
+      <div id="searchInputContainer">
+          <Image
+            src="/assets/busca/Lupa/Shape@1,5x.svg"
+            alt="Logo do Grupo"
+            layout="intrinsic"
+            width={20}
+            height={0}
+          />
+        <input id="searchInput" type="text" placeholder="Procure por heróis"/>
+      </div>
     </header>
   );
 }
