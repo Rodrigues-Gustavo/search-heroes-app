@@ -1,15 +1,16 @@
-.backgroundHeroPage{
+.backgroundHeroPage {
   background-color: var(--tertiary);
   min-height: 100vh;
   padding: 30px 0 0 0;
 }
 
-.header{
+.header {
   display: flex;
   gap: 40px;
   margin-bottom: 40px;
 }
-.searchInputContainer{
+
+.searchInputContainer {
   display: flex;
   align-items: center;
   gap: 5%;
@@ -19,65 +20,77 @@
   border-radius: 40px;
   margin: 40px 0px;
 }
-.searchInput{
-width: 100%;
-border: none;
-background-color: transparent;
-}
-.searchInput::placeholder {
-color: var(--foreground);
-opacity: 50%;
-font-weight: 600;
-}
-.searchInput:focus{
-outline: none;
+
+.searchInput {
+  width: 100%;
+  border: none;
+  background-color: transparent;
 }
 
-.heroOverview{
+.searchInput::placeholder {
+  color: var(--foreground);
+  opacity: 50%;
+  font-weight: 600;
+}
+
+.searchInput:focus {
+  outline: none;
+}
+
+.heroOverview {
   display: grid;
   grid-template-columns: 30% 70%;
   gap: 20px;
   position: relative;
   margin-bottom: 40px;
 }
-.heroInformations{
+
+.heroInformations {
   display: flex;
   flex-direction: column;
   z-index: 1;
   gap: 25px;
 }
-.nameHero{
+
+.nameHero {
   display: flex;
   justify-content: space-between;
 }
-.favoriteIcon{
+
+.favoriteIcon {
   cursor: pointer;
   transition: transform 0.3s ease;
 }
+
 .favoriteIcon:hover {
-transform: scale(1.1);
+  transform: scale(1.1);
 }
-.imageHeroOverview{
+
+.imageHeroOverview {
   z-index: 1;
   display: flex;
   justify-content: flex-end;
 }
-.heroAppearances{
+
+.heroAppearances {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(2, auto);
   gap: 10px;
 }
-.heroAppearances p{
+
+.heroAppearances p {
   font-weight: 600;
 }
-.heroAppearancesDiv{
+
+.heroAppearancesDiv {
   display: flex;
   align-items: center;
   gap: 15px;
   font-weight: 500;
 }
-.textBackgroundHeroOverview{
+
+.textBackgroundHeroOverview {
   position: absolute;
   right: 10px;
   z-index: 0;
@@ -88,10 +101,139 @@ transform: scale(1.1);
   font-weight: 900;
 }
 
-.comicsSection{
+.comicsSection {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   grid-template-rows: repeat(2, auto);
   gap: 10px;
   margin-top: 20px;
+}
+
+@media screen and (max-width: 768px) {
+  .heroOverview {
+    grid-template-columns: 40% 60%;
+  }
+
+  .comicsSection {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .textBackgroundHeroOverview {
+    font-size: 6em;
+  }
+
+  .imageHeroOverview img {
+    width: 80%;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .heroOverview {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .heroInformations {
+    align-items: center;
+  }
+
+  .imageHeroOverview {
+    justify-content: center;
+  }
+
+  .imageHeroOverview img {
+    width: 50%;
+  }
+
+  .nameHero {
+    justify-content: center;
+  }
+
+  .textBackgroundHeroOverview {
+    font-size: 4em;
+    right: 0;
+    text-align: center;
+    width: 100%;
+  }
+
+  .comicsSection {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .header {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .searchInputContainer {
+    width: 100%;
+    padding: 10px;
+    border-radius: 30px;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .searchInputContainer {
+    width: 100%;
+    padding: 10px;
+    border-radius: 30px;
+  }
+
+  .textBackgroundHeroOverview {
+    font-size: 3.5em;
+  }
+
+  .comicsSection {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 10px;
+  }
+
+  .nameHero {
+    justify-content: center;
+  }
+
+  .header {
+    flex-direction: column;
+    gap: 20px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .heroOverview {
+    grid-template-columns: 1fr;
+  }
+
+  .imageHeroOverview {
+    justify-content: center;
+  }
+
+  .imageHeroOverview img {
+    width: 60%;
+  }
+
+  .textBackgroundHeroOverview {
+    font-size: 3em;
+    text-align: center;
+    width: 100%;
+  }
+
+  .comicsSection {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .searchInputContainer {
+    width: 100%;
+    padding: 10px;
+    border-radius: 30px;
+  }
+
+  .nameHero {
+    justify-content: center;
+  }
+
+  .header {
+    flex-direction: column;
+    gap: 20px;
+  }
 }
