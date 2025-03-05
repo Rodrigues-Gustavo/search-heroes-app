@@ -12,7 +12,7 @@
 #### Filtro por personagem favorito ✅
 #### Persistência de dados dos favoritos ✅
 #### Página principal com layout responsivo ✅
-#### Página de detalhes do herói parcialmente com layout responsivo ✅
+#### Página de detalhes do herói com layout parcialmente  responsivo ✅
 
 ## ⚙️ Pré-requisitos
 
